@@ -29,11 +29,28 @@ require File.expand_path(File.dirname(__FILE__) + '/edgecase')
 #
 # Your goal is to write the score method.
 
-def score(dice)
-  # You need to write this method
-end
-
 class AboutScoringProject < EdgeCase::Koan
+  def score(rolls)
+   if rolls==[] then return 0 end
+   counts = [0,0,0,0,0,0,0]
+   rolls.each { |roll|
+      counts[roll] = counts[roll]+1      
+   }
+   # print "C1: " + counts.inspect + "\n"
+   triples = [0,0,0,0,0,0,0]
+   index = 0
+   triples.map { |triple|
+      while counts[index]>=3 do 
+         triples[index] = triples[index] + 1
+         counts[index] = counts[index] - 3
+      end
+      index = index + 1
+   }
+   # print "C2: " + counts.inspect + "\n"
+   # print "T1: " + triples.inspect + "\n\n"
+   triples[1]*1000 + triples[2]*200 + triples[3]*300 + triples[4]*400 + triples[5]*500 + triples[6]*600 + counts[1]*100 + counts[5]*50 
+  end
+
   def test_score_of_an_empty_list_is_zero
     assert_equal 0, score([])
   end
